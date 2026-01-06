@@ -56,4 +56,5 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   let tree = new Tree(arr);
 
+  tree.insert(10); // 10 should be added
   console.log(prettyPrint(tree.root));
