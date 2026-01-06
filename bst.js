@@ -39,3 +39,21 @@ class Tree {
         this.root = helper(this.root); 
     }
 }
+
+const prettyPrint = (node, prefix = '', isLeft = true) => {
+    if (node === null) {
+      return;
+    }
+    if (node.rightChild !== null) {
+      prettyPrint(node.rightChild, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+    }
+    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+    if (node.leftChild !== null) {
+      prettyPrint(node.leftChild, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+    }
+  };
+
+  let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  let tree = new Tree(arr);
+
+  console.log(prettyPrint(tree.root));
