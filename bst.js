@@ -25,4 +25,17 @@ class Tree {
 
         return root; // Bubbles up so that each node has a left and right child node
     }
+
+    insert(value) {
+        function helper(node) {
+            if (node === null) return new Node(value); // Creates new node when empty spot is found
+
+            if (node.data > value) node.leftChild = helper(node.leftChild); // Moves left
+
+            if (node.data < value) node.rightChild = helper(node.rightChild); // Moves right
+
+            return node; // Rebuilds tree on way back up
+        }
+        this.root = helper(this.root); 
+    }
 }
