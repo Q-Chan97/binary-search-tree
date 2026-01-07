@@ -69,6 +69,17 @@ class Tree {
         if (node.leftChild === null) return node;
         return this.findSuccessor(node.leftChild);
     }
+
+    find(value) {
+        const helper = (node) => {
+            if (node === null) return null; // Return node or null if the value is found or not
+            if (node.data === value) return node;
+
+            if (value < node.data) return helper(node.leftChild); // Moves through tree
+            else return helper(node.rightChild);
+        }
+        return helper(this.root); // Start at root
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -82,11 +93,10 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node.leftChild !== null) {
       prettyPrint(node.leftChild, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
-  };
+};
 
-  let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  let tree = new Tree(arr);
+let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+let tree = new Tree(arr);
 
-  tree.delete(7);
-  tree.delete(3);
-  console.log(prettyPrint(tree.root));
+console.log(tree.find(5)); // Returns whole node
+console.log(prettyPrint(tree.root));
