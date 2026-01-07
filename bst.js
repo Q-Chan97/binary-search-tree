@@ -38,6 +38,37 @@ class Tree {
         }
         this.root = helper(this.root); 
     }
+
+    delete(value) {
+        const helper = (node, value) => {
+            if (node === null) return null; // Base, deletes node
+
+            if (node.data > value) node.leftChild = helper(node.leftChild, value); // Moves left
+
+            // Moves right, else if so that the else statement doesn't belong to it
+            else if (node.data < value) node.rightChild = helper(node.rightChild, value); 
+
+            else { 
+                // Value found; 0 or 1 child case. Returned child replaces deleted node
+                if (node.leftChild === null) return node.rightChild;
+                if (node.rightChild === null) return node.leftChild;
+
+                // Case for two children
+                let successor = this.findSuccessor(node.rightChild);
+                node.data = successor.data; // Overwrites old data with new data
+                node.rightChild = helper(node.rightChild, successor.data); // Links new right child, building tree and removing duplicate successor
+            }
+
+            return node; // Rebuilds tree on way back up
+        }
+        this.root = helper(this.root, value);
+    }
+
+    // Recursive function, finds in-order successor
+    findSuccessor(node) {
+        if (node.leftChild === null) return node;
+        return this.findSuccessor(node.leftChild);
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -56,5 +87,6 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   let tree = new Tree(arr);
 
-  tree.insert(10); // 10 should be added
+  tree.delete(7);
+  tree.delete(3);
   console.log(prettyPrint(tree.root));
