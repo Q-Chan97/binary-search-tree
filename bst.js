@@ -89,6 +89,17 @@ class Tree {
             this.height(node.rightChild)
         )
     }
+
+    depth(node) {
+        const helper = (node, value, edges) => {
+            if (node === null) return -1; // Value not found
+            if (node.data === value) return edges; // Returns edges when value found
+
+            if (value < node.data) return helper(node.leftChild, value, edges + 1); // Edges go up each recursion call
+            else return helper(node.rightChild, value, edges + 1);
+        }
+        return helper(this.root, node.data, 0); // Edges start at 0
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -107,6 +118,6 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 let tree = new Tree(arr);
 
-let testNode = tree.find(8); // Capture 8
-console.log(tree.height(testNode)); // Should return 2- 8 is two nodes away from a leaf node
+let testNode = tree.find(6); // Capture 6
+console.log(tree.depth(testNode)); // Should return 3- 6 is three levels down
 console.log(prettyPrint(tree.root));
