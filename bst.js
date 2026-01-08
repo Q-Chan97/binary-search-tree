@@ -100,6 +100,41 @@ class Tree {
         }
         return helper(this.root, node.data, 0); // Edges start at 0
     }
+
+    levelOrderForEach(callback) { // Iterative version
+        if (callback === undefined) throw Error("Callback required");
+        if (this.root === null) return;
+
+        const queue = [];
+        queue.push(this.root); // Start with root node
+
+        while (queue.length !== 0) {
+            let node = queue.shift(); // Captures node
+            callback(node); // Do something with node
+            if (node.leftChild !== null) queue.push(node.leftChild); // Adds children to queue and continues to next node
+            if (node.rightChild !== null) queue.push(node.rightChild);
+        }
+    }
+
+    levelOrderForEachRecur(callback) { // Recursive version
+        if (this.root === null) return;
+
+        let height = this.height(this.root); // Gets height of root (number of levels)
+
+        const levelVisit = (node, level) => {
+            if (node === null) return;
+
+            if (level === 0) { // At root of tree, use callback function on node
+                callback(node);
+            } else {
+                levelVisit(node.leftChild, level - 1); // Move to children down tree vertically
+                levelVisit(node.rightChild, level - 1);
+            }
+        }
+        for (let i = 0; i < height; i++) { // Moves through each level horizontally
+            levelVisit(this.root, i);
+        }
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
