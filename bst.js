@@ -80,6 +80,15 @@ class Tree {
         }
         return helper(this.root); // Start at root
     }
+
+    height(node) { // Counts height of node to deepest leaf node
+        if (node === null) return -1; // Return -1 if not found
+
+        return 1 + Math.max( // Returns highest number found in both subtrees
+            this.height(node.leftChild),
+            this.height(node.rightChild)
+        )
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -98,5 +107,6 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 let tree = new Tree(arr);
 
-console.log(tree.find(5)); // Returns whole node
+let testNode = tree.find(8); // Capture 8
+console.log(tree.height(testNode)); // Should return 2- 8 is two nodes away from a leaf node
 console.log(prettyPrint(tree.root));
