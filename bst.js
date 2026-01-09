@@ -177,6 +177,25 @@ class Tree {
 
         traverse(this.root); // Start at root node
     }
+
+    isBalanced() {
+        const check = (node) => {
+            if (node === null) return 0; // Starts at 0 - Using a number to track balance
+
+            let leftHeight = check(node.leftChild);
+            if (leftHeight === -1) return -1; // Left subtree is read as unbalanced
+
+            let rightHeight = check(node.rightChild);
+            if (rightHeight === -1) return -1; // Same thing for right subtree
+
+            if (Math.abs(leftHeight - rightHeight) > 1)  { // abs() makes it a positive integer
+                return -1; // False case
+            }
+
+            return Math.max(leftHeight, rightHeight) + 1; // Returns whichever is bigger, +1 for each step upwards from each node
+        }
+        return check(this.root) !== -1; // Returns a boolean, true if tree is balanced
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -195,6 +214,5 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 let tree = new Tree(arr);
 
-let testNode = tree.find(6); // Capture 6
-console.log(tree.depth(testNode)); // Should return 3- 6 is three levels down
+console.log(tree.isBalanced()); // Should return true, tree is balanced
 console.log(prettyPrint(tree.root));
