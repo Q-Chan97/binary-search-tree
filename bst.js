@@ -135,6 +135,20 @@ class Tree {
             levelVisit(this.root, i);
         }
     }
+
+    inOrderForEach(callback) { // Traverse tree, use callback on each node inOrder- left-> middle -> right
+        if (callback === undefined) throw Error("Callback required");
+
+        const traverse = (node) => {
+            if (node === null) return; // Base, returns when end of tree is found
+
+            traverse(node.leftChild); // Move as far left as possible first
+            callback(node); // Do something with node
+            traverse(node.rightChild); // Then move right
+        }
+
+        traverse(this.root); // Start at root node
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
