@@ -223,5 +223,21 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 let tree = new Tree(arr);
 
-console.log(tree.isBalanced()); // Should return true, tree is balanced
-console.log(prettyPrint(tree.root));
+let randomArr = [10, 47, 5, 30, 17, 32, 49, 45, 37, 40, 31, 43, 28, 39, 18, 35, 41, 46, 16, 24, 42, 27, 29, 36, 21, 6, 22, 13, 2, 33, 26, 23, 14, 11, 44, 15, 20, 34, 48, 25, 3, 1, 4, 50, 12, 7, 19, 9, 8, 38];
+let randomTree = new Tree(randomArr);
+console.log(randomTree.isBalanced()); // balanced
+
+let values = [];
+// randomTree.levelOrderForEach(node => values.push(node.data)); // Level order
+// randomTree.preOrderForEach(node => values.push(node.data)); // Pre-order
+// randomTree.postOrderForEach(node => values.push(node.data)); // Post-order
+randomTree.inOrderForEach(node => values.push(node.data)); // In-order
+console.log(values);
+
+randomTree.insert(115); // New values to unbalance tree
+randomTree.insert(145);
+randomTree.insert(265);
+
+console.log(randomTree.isBalanced()); // False
+randomTree.rebalance();
+console.log(randomTree.isBalanced()); // True!
