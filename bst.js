@@ -196,6 +196,15 @@ class Tree {
         }
         return check(this.root) !== -1; // Returns a boolean, true if tree is balanced
     }
+
+    rebalance() {
+        let sortedValues = [];
+        const pushNode = (node) => { // Will push data into in-order sorted array
+            sortedValues.push(node.data);
+        }
+        this.inOrderForEach(pushNode) // Traverses in-order, will get node from traverse helper
+        this.root = this.buildTree(sortedValues); // Builds new tree from sorted values
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
