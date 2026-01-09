@@ -149,6 +149,34 @@ class Tree {
 
         traverse(this.root); // Start at root node
     }
+
+    preOrderForEach(callback) { // Traverse tree, use callback on each node preOrder- middle -> left -> right
+        if (callback === undefined) throw Error("Callback required");
+
+        const traverse = (node) => {
+            if (node === null) return; // Base, returns when end of tree is found
+
+            callback(node); // Do something with node first
+            traverse(node.leftChild); // Then move left
+            traverse(node.rightChild); // And finally move right
+        }
+
+        traverse(this.root); // Start at root node
+    }
+
+    postOrderForEach(callback) { // Traverse tree, use callback on each node postOrder- left -> right -> middle
+        if (callback === undefined) throw Error("Callback required");
+
+        const traverse = (node) => {
+            if (node === null) return; // Base, returns when end of tree is found
+
+            traverse(node.leftChild); // Find a left child first
+            traverse(node.rightChild); // Then look for a right
+            callback(node); // And then do something with node
+        }
+
+        traverse(this.root); // Start at root node
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
